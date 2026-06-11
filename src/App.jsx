@@ -10,6 +10,9 @@ function App() {
   const [weather, setWeather] = useState(null);
   const [randomUser, setRandomUser] = useState(null);
   const [cocktailData, setCocktailData] = useState(null);
+  const [dummyUsers, setDummyUsers] = useState([]);
+  const [dummyPosts, setDummyPosts] = useState([]);
+  const [quotesData, setQuotesData] = useState([]);
 
   return (
     <div className="App p-4">
@@ -55,7 +58,7 @@ function App() {
       )}
 
 
-      <h2 className="font-semibold mt-6">JSONPlaceholder Posts</h2>
+      <h2 className="font-semibold mt-6">Posts</h2>
       <FetchButton api="jsonplaceholder" onSuccess={setPosts}>
         Fetch Posts
       </FetchButton>
@@ -126,6 +129,78 @@ function App() {
         <pre className="border p-2 mt-2 overflow-auto max-h-96">
           {JSON.stringify(cocktailData, null, 2)}
         </pre>
+      )}
+
+      <h2 className="font-semibold mt-6">Dummy Users</h2>
+      <FetchButton api="dummyusers" onSuccess={setDummyUsers} >
+        Fetch Dummy Users
+      </FetchButton>
+      {dummyUsers?.users?.length > 0 && (
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {dummyUsers.users.map(user => (
+            <div key={user.id} className="border p-4 rounded-lg shadow-sm">
+              <h3 className="font-bold text-lg mb-2">{user.firstName} {user.lastName}</h3>
+              <p><strong>Username:</strong> {user.username}</p>
+              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Phone:</strong> {user.phone}</p>
+              <p><strong>Age:</strong> {user.age}</p>
+              <p><strong>Gender:</strong> {user.gender}</p>
+
+              <p className="mt-2 font-semibold">Address:</p>
+              <p>{user.address.address}</p>
+              <p>{user.address.city}, {user.address.state}</p>
+              <p>{user.address.postalCode}</p>
+
+              <p className="mt-2 font-semibold">Company:</p>
+              <p>{user.company.name}</p>
+              <p>{user.company.department}</p>
+
+              <img
+                src={user.image}
+                alt={`${user.firstName} ${user.lastName}`}
+                className="w-24 h-24 object-cover rounded-full mt-2"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+
+      <h2 className="font-semibold mt-6">Dummy SocialPosts</h2>
+      <FetchButton api="dummyPosts" onSuccess={setDummyPosts}>
+        Fetch Dummy Social Posts
+      </FetchButton>
+
+      {dummyPosts?.posts?.length > 0 && (
+        <div className="mt-4">
+          {dummyPosts.posts.map(post => (
+            <div key={post.id} className="border p-2 my-2 rounded-lg shadow-sm">
+              <h3 className="font-bold">{post.title}</h3>
+              <p>{post.body}</p>
+              <p className="text-sm text-gray-500">User ID: {post.userId}</p>
+              <p className="text-sm text-gray-500">Reactions: {post.reactions.likes} Likes / {post.reactions.dislikes} Dislikes</p>
+              <p className="text-sm text-gray-500">Views: {post.views}</p>
+              <p className="text-sm text-gray-500">Tags: {post.tags.join(', ')}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <h2 className="font-semibold mt-6">Quotes</h2>
+      <FetchButton api="quotes" onSuccess={setQuotesData}>
+        Fetch Quotes
+      </FetchButton>
+
+
+      {quotesData?.quotes?.length > 0 && (
+        <div className="mt-4">
+          {quotesData.quotes.map(quote => (
+            <div key={quote.id} className="border p-2 my-2 rounded-lg shadow-sm">
+              <p className="italic">"{quote.quote}"</p>
+              <p className="text-right font-semibold mt-1">— {quote.author}</p>
+            </div>
+          ))}
+        </div>
       )}
 
     </div>

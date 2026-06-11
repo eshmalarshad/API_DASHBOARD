@@ -21,7 +21,7 @@ app.use('/api/fetch', limiter);
 
 // Generic endpoint for multiple APIs
 app.get('/api/fetch', async (req, res) => {
-  const response = await (await import('node-fetch'));
+  const fetch = (await import('node-fetch')).default;
   const { api } = req.query;
 
   const apiUrls = {
@@ -32,6 +32,9 @@ app.get('/api/fetch', async (req, res) => {
     weather: `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Seattle?unitGroup=metric&key=${process.env.VISUAL_API_KEY}&include=current`,
     randomuser: 'https://randomuser.me/api/',
     cocktail: 'https://thecocktaildb.com/api/json/v1/1/search.php?f=a',
+    dummyusers: 'https://dummyjson.com/users',
+    dummyPosts: 'https://dummyjson.com/posts',
+    quotes: 'https://dummyjson.com/quotes',
   };
 
   if (!apiUrls[api]) return res.status(400).json({ error: 'API not found' });
@@ -75,6 +78,15 @@ app.get('/api/fetch', async (req, res) => {
       return res.json(data.results[0]); // full JSON
     }
     if (api === 'cocktail') {
+      return res.json(data);
+    }
+    if (api === 'dummyusers') {
+      return res.json(data);
+    }
+    if (api === 'dummyPosts') {
+      return res.json(data);
+    }
+    if (api === 'quotes') {
       return res.json(data);
     }
 

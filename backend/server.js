@@ -12,7 +12,7 @@ app.use(cors({
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 60, // limit each IP to 60 requests per window
+  max: 10, // limit each IP to 10 requests per window
   message: 'Too many requests from this IP, please try again later.'
 });
 app.use('/api/fetch', limiter);

@@ -125,11 +125,17 @@ function App() {
         Fetch Cocktails
       </FetchButton>
 
-      {cocktailData && (
-        <pre className="border p-2 mt-2 overflow-auto max-h-96">
-          {JSON.stringify(cocktailData, null, 2)}
-        </pre>
-      )}
+      {cocktailData?.drinks?.map((drink) => (
+        <div key={drink.idDrink} className="border p-2 my-2">
+          <h3>{drink.strDrink}</h3>
+          <img
+            src={drink.strDrinkThumb}
+            alt={drink.strDrink}
+            width="150"
+          />
+          <p>{drink.strCategory}</p>
+        </div>
+      ))}
 
       <h2 className="font-semibold mt-6">Dummy Users</h2>
       <FetchButton api="dummyusers" onSuccess={setDummyUsers} >
